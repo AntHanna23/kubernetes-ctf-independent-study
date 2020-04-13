@@ -10,6 +10,6 @@ RUN useradd -ms /bin/bash admin \
 ENTRYPOINT service ssh restart && bash
 
 
-COPY flag.txt ~/admin/flag.txt
+COPY flag.txt /home/admin/flag.txt
 
 
