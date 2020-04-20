@@ -6,7 +6,6 @@ This project uses Kubernetes to host a Capture the Flag competition. The project
 
 
 ## __Breakdown and Tutorial of the Cluster__
----
 
 This will be a description and documentation on all the parts make the cluster work. See the docs folder to see all the fies or click below.
 
