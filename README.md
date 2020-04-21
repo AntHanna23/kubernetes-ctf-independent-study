@@ -2,7 +2,7 @@
 
 ## __Overview__
 
-This project uses Kubernetes to host a Capture the Flag competition. The project will scale as more students/users access the project while allowing lower reseource datacenters to run the project. This infrastructure can be copied and used to replace the current way cyberlab creates and deploys applications for students to use.
+This project uses Kubernetes to host a Capture the Flag competition. The project will scale as more students/users access the project while allowing lower resource datacenters to run the project. This infrastructure can be copied and used to replace the current way cyberlab creates and deploys applications for students to use.
 
 
 ## __Breakdown and Tutorial of the Cluster__

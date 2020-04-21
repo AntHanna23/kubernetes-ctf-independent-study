@@ -24,7 +24,6 @@ You can BruteForce the SSH server with Hydra via the command line with the wordl
 
 ## Vulnerable FTP Container
 
----
 
 This container is an ftp server that allows anonymous login. The flag is only reachable via anonymous login. Pull the image with
 
@@ -36,6 +35,22 @@ The image will be downloaded to your local repository. You can run the container
 
 **Warning** : If you already have FTP on your machine then docker can not use that port at the same time. Therefore you you need to run docker on a different port on your local machine. Use a port not being used by you local machine and configure that to route back to 21 or 20 within the container. For example:
 
-        docker container run -p 27:21 -p 28:20 -p 14450-14500:13450-13500 -d ajhanna/vuln-ftp
+    docker container run -p 27:21 -p 28:20 -p 14450-14500:13450-13500 -d ajhanna/vuln-ftp
 
 Now you can log in with the anonymous user via web browser, terminal, or client like Filezilla
+
+
+## Vulnerable Web Application (DVWA)
+
+This contains a dockerized version of the Dam Vulnerable Web Application. This web application has many challenges that are built into the machine. Students will visit the website and create a container and create the database.
+
+![](pics/setup.png)
+
+Once the database is created you can log in with the following credentials:
+
+    Username: admin
+    Password: password
+
+Finally, start the challenges on the left side of the screen and screenshot any that were successful. There is a flag in the home the directory of the root user. Shell access is the ultimate goal here.
+
+![](pics/setup-dificulty.png)
