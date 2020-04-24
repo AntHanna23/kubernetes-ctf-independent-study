@@ -21,14 +21,7 @@ class HTMLPurifier_HTMLModule_Scripting extends HTMLPurifier_HTMLModule
     public $safe = false;
     
     public function setup($config) {
-        // TODO: create custom child-definition for noscript that
-        // auto-wraps stray #PCDATA in a similar manner to 
-        // blockquote's custom definition (we would use it but
-        // blockquote's contents are optional while noscript's contents
-        // are required)
-        
-        // TODO: convert this to new syntax, main problem is getting
-        // both content sets working
+       
         
         // In theory, this could be safe, but I don't see any reason to
         // allow it.

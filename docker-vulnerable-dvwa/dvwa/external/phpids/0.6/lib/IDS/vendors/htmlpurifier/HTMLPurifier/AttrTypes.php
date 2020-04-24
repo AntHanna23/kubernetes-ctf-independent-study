@@ -37,7 +37,7 @@ class HTMLPurifier_AttrTypes
         $this->info['Character'] = new HTMLPurifier_AttrDef_Text();
         
         // number is really a positive integer (one or more digits)
-        // FIXME: ^^ not always, see start and value of list items
+        
         $this->info['Number']   = new HTMLPurifier_AttrDef_Integer(false, false, true);
     }
     
