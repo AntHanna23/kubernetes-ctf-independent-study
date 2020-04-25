@@ -15,3 +15,4 @@ ENTRYPOINT service ssh start && bash
 COPY flag.txt /home/admin/flag.txt
 
 
+EXPOSE 22
