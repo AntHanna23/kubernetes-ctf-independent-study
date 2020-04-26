@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vuln-ssh
+  labels:
+    app: vuln-ssh
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vuln-ssh
+  template:
+    metadata:
+      labels:
+        app: vuln-ssh
+    spec:
+      containers:
+      - name: vuln-ssh
+        image: ajhanna/vuln-ssh
+        ports:
+        - containerPort: 22
+        resources:
+          limits:
+            cpu: "600m"
+            memory: "256Mi"
+          requests:
+            cpu: 200m
+            memory: "64Mi"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: vuln-ssh-service
+  labels:
+    app: vuln-ssh
+spec:
+  ports:
+  - name: vuln-ssh
+    port: 22
+    protocol: TCP
+    targetPort: 22
+  selector:
+    app: vuln-ssh
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: vuln-ssh-ingress
+  annotations:
+    kubenetes.io/ingress.class: "traefick"
+spec:
+  entryPoints:
+  - vuln-ssh
+  routes:
+    services:
+    - name: vuln-ssh
+      port: 22
+
