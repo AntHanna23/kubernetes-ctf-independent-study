@@ -46,17 +46,14 @@ spec:
 
 ---
 
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
 metadata:
   name: vuln-ssh-ingress
   annotations:
     kubenetes.io/ingress.class: "traefick"
 spec:
-  entryPoints:
-  - vuln-ssh
-  routes:
-    services:
-    - name: vuln-ssh
-      port: 22
+  backend:
+    serviceName: vuln-ssh
+    servicePort: 22
 
