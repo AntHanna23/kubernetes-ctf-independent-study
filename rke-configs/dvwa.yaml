@@ -5,7 +5,6 @@ metadata:
   labels:
     app: dvwa
 spec:
-  replicas: 3
   selector:
     matchLabels:
       app: dvwa
@@ -24,7 +23,7 @@ spec:
             cpu: "600m"
             memory: "256Mi" 
           requests:  
-            cpu: 200m
+            cpu: "200m"
             memory: "64Mi"
 
 ---
@@ -56,6 +55,42 @@ spec:
   - http:
       paths:
       - path: /
-        backend:
+        backend: 
           serviceName: dvwa-service
           servicePort: 8080
+
+---
+
+# apiVersion: autoscaling/v1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: dvwa-autoscaler
+# spec:
+#   scaleTargetRef:
+#     kind: ReplicaSet
+#     name: dvwa
+#   minReplicas: 10
+#   maxReplicas: 50
+#   targetCPUUtilizationPercentage: 70
+apiVersion:  autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata: 
+  name: dvwa-autoscaler
+  namespace: ctf
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: dvwa
+  maxReplicas: 30
+  minReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 40
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageValue: "100Mi"
+
