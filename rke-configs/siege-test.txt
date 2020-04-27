@@ -1,3 +1,4 @@
-https://192.168.86.182/
-https://192.168.86.184/
-https://192.168.86.185/
+https://192.168.86.241:8080
+
+
+Does not work with load balancer only with ingress

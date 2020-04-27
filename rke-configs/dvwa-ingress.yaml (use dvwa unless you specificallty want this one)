@@ -37,7 +37,7 @@ metadata:
 spec:
   ports:
   - name: http
-    port: 8080
+    port: 80
     targetPort: 80
   selector:
     app: dvwa
@@ -50,6 +50,7 @@ metadata:
   name: dvwa-ingress
   annotations:
     kubenetes.io/ingress.class: "traefick"
+    traefik.ingress.kubernetes.io/rule-type: "PathPrefixStrip"
 spec:
   rules:
   - http:
@@ -57,21 +58,33 @@ spec:
       - path: /
         backend: 
           serviceName: dvwa-service
-          servicePort: 8080
+          servicePort: 80
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: dvwa-auth
+# spec:
+#   forwardAuth:
+#     address: 
+#       - https://192.168.86.182/login.php
+#       - https://192.168.86.184/login.php
+#       - https://192.168.86.185/login.php
+#     trustForwardHeader: true
+# ---
+
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: dvwa-header
+# spec:
+#   headers:
+#     frameDeny: "true"
+#     sslRedirect: "true"
+# ---    
 
 ---
 
-# apiVersion: autoscaling/v1
-# kind: HorizontalPodAutoscaler
-# metadata:
-#   name: dvwa-autoscaler
-# spec:
-#   scaleTargetRef:
-#     kind: ReplicaSet
-#     name: dvwa
-#   minReplicas: 10
-#   maxReplicas: 50
-#   targetCPUUtilizationPercentage: 70
 apiVersion:  autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata: 
@@ -83,7 +96,7 @@ spec:
     kind: Deployment
     name: dvwa
   maxReplicas: 30
-  minReplicas: 5
+  minReplicas: 3
   metrics:
   - type: Resource
     resource:
@@ -92,5 +105,5 @@ spec:
   - type: Resource
     resource:
       name: memory
-      targetAverageValue: "100Mi"
+      targetAverageValue: "400Mi"
 
