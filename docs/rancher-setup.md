@@ -6,7 +6,7 @@ Rancher provides very good documentation. Too see how to build it from scratch, 
 
 If you are configuring the cluster for the run: 
 
-    rke config --name <cluster-name>.yml
+    rke config --name <cluster-name>.yml // I used Calico for networking but others will work
 
 This will take you though creation of thr cluster. A file will be created and then run:
 

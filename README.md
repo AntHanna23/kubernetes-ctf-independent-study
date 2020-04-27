@@ -12,4 +12,4 @@ This will be a description and documentation on all the parts make the cluster w
 *  [Prerequisites](/docs/prerequisites.md)
 *  [Docker-Containers](/docs/docker-container.md)
 *  [Rancher-Setup](/docs/rancher-setup.md)
-*  [Kubernetes Deployments](/docs/kubernetes-deployments.md)
+*  [Kubernetes Manifests](/docs/kubernetes-manifests.md)
