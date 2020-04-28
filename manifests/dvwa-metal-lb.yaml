@@ -25,8 +25,8 @@ metadata:
   annotations:
     service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
     service.beta.kubernetes.io/do-loadbalancer-sticky-sessions-type: "cookies"
-    service.beta.kubernetes.io/do-loadbalancer-sticky-sessions-cookie-name: "example"
-    service.beta.kubernetes.io/do-loadbalancer-sticky-sessions-cookie-ttl: "60"
+    service.beta.kubernetes.io/do-loadbalancer-sticky-sessions-cookie-name: "dvwa"
+    service.beta.kubernetes.io/do-loadbalancer-sticky-sessions-cookie-ttl: "600"
 spec:
   ports:
   - name: http
@@ -48,8 +48,8 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: dvwa-lb
-  maxReplicas: 30
-  minReplicas: 3
+  maxReplicas: 3
+  minReplicas: 1
   metrics:
   - type: Resource
     resource:

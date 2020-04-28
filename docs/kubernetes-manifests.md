@@ -14,7 +14,7 @@ This web application deployment consist of the deployment of the pods, a service
 Now you need a ConfigMap for MetalLb. ConfigMaps allow you to decouple configuration artifacts from image content to keep containerized applications portable. This page provides a series of usage examples demonstrating how to create ConfigMaps and configure Pods using data stored in ConfigMaps. In layman's terms, it can be used for values (configurations, secrets, etc.) to be passed to containers. Because containers die and comeback all the time, it can be helpful to pass configs from a consistent source. Create the ConfigMap by make a yaml file. 
 
 
-    $ cat <<EOF | kubectl creat -f -
+    $ cat <<EOF | kubectl create -f -
     apiVersion: v1
     kind: ConfigMap
     metadata:
@@ -26,7 +26,7 @@ Now you need a ConfigMap for MetalLb. ConfigMaps allow you to decouple configura
         - name: my-ip-space
         protocol: layer2
         addresses:
-        - 192.168.1.240/2(add your netowork addressing scheme)
+        - 192.168.1.240/2(add your network addressing scheme)
     EOF
     
 
@@ -42,3 +42,6 @@ The pods will start running and you will be able to connect via the LoadBalancer
 
     kubectl get svc -n metallb-system
 
+**Warning** : Make sure ad blocker is off. Add blocker can block the CSRF tokens handed by the site. If you have a problem with CSRF open up a private browser and try a few times before asking for assistance.
+
+# Vuln-Ssh

@@ -5,6 +5,7 @@ metadata:
   labels:
     app: dvwa
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: dvwa
@@ -20,8 +21,8 @@ spec:
         - containerPort: 80
         resources: 
           limits:
-            cpu: "600m"
-            memory: "256Mi" 
+            cpu: "1000m"
+            memory: "3Gi" 
           requests:  
             cpu: "200m"
             memory: "64Mi"
@@ -41,7 +42,9 @@ spec:
     targetPort: 80
   selector:
     app: dvwa
-
+  sessionAffinityConfig:
+   clientIP:
+      timeoutSeconds: 1000000
 ---
 
 apiVersion: networking.k8s.io/v1beta1
@@ -49,8 +52,8 @@ kind: Ingress
 metadata:
   name: dvwa-ingress
   annotations:
-    kubenetes.io/ingress.class: "traefick"
-    traefik.ingress.kubernetes.io/rule-type: "PathPrefixStrip"
+    traefik.ingress.kubernetes.io/affinity: "true"
+    traefik.ingress.kubernetes.io/session-cookie-name: "sticky"
 spec:
   rules:
   - http:
@@ -85,25 +88,36 @@ spec:
 
 ---
 
-apiVersion:  autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-metadata: 
-  name: dvwa-autoscaler
-  namespace: ctf
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: dvwa
-  maxReplicas: 30
-  minReplicas: 3
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 40
-  - type: Resource
-    resource:
-      name: memory
-      targetAverageValue: "400Mi"
+# apiVersion:  autoscaling/v2beta1
+# kind: HorizontalPodAutoscaler
+# metadata: 
+#   name: dvwa-autoscaler
+#   namespace: ctf
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: dvwa
+#   maxReplicas: 30
+#   minReplicas: 3
+#   metrics:
+#   - type: Resource
+#     resource:
+#       name: cpu
+#       targetAverageUtilization: 40
+#   - type: Resource
+#     resource:
+#       name: memory
+#       targetAverageValue: "400Mi"
 
+# apiVersion: autoscaling.k8s.io/v1beta2
+# kind: VerticalPodAutoscaler
+# metadata:
+#   name: dvwa vertical scale
+# spec:
+#   targetRef:
+#     apiVersion: "apps/v1"
+#     kind:       Deployment
+#     name:       dvwa
+#   updatePolicy:
+#     updateMode: "Off"
