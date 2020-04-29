@@ -2,7 +2,7 @@
 
 Kubernetes Manifests are a collection of yaml configs in a single file that allows a user to build a desired application by applying the yaml file. This includes deployments, ingress, services, and anything else that would be packaged to build the application in Kubernetes. You can find the the manifests for the Capture the Flag in the repo. 
 
-# DVWA Manifest
+# DVWA Manifest /w MetalLb
 
 This web application deployment consist of the deployment of the pods, a services to allow the cluster to talk to the containers, and finally an auto scaling function. It uses a load balancer called [Metallb](https://metallb.universe.tf/installation/). Once you have a cluster installed with Rancher, you are ready to download MetalLb. 
 
@@ -43,5 +43,21 @@ The pods will start running and you will be able to connect via the LoadBalancer
     kubectl get svc -n metallb-system
 
 **Warning** : Make sure ad blocker is off. Add blocker can block the CSRF tokens handed by the site. If you have a problem with CSRF open up a private browser and try a few times before asking for assistance.
+
+# DVWA Manifest /w Nginx Ingress
+
+This deployment achieves the same goal but solves all the csrf issues of the MetalLb deployement and shows up on an Nmap scan, allowing students to go through the entire pentration testing framework.
+
+If Rancher was used to to create the Kubernetes cluster, then Nginx Ingress was already created so it is as simple as running the manifest file.
+
+    kubectl apply -f dvwa-ingress.yaml -n ctf
+
+Now run a command which allows you to see the endpoints that the cluster ingress is listening on. 
+
+    kubectl get ingress -n ctf
+
+The endpoints are listed under the external IP addresses. Later in the documntation, it will show how to put these behind a single ip loadbalancer. The loadbalancer could make the nmap scan harder to perform.
+
+This deployment also supports auto scaling with memory limits.
 
 # Vuln-Ssh
