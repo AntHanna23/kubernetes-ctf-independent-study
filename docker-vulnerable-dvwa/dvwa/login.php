@@ -46,7 +46,7 @@ if( isset( $_POST[ 'Login' ] ) ) {
 $messagesHtml = messagesPopAllToHtml();
 
 Header( 'Cache-Control: no-cache, must-revalidate');    // HTTP/1.1
-Header( 'Content-Type: text/html;charset=utf-8' );      // TODO- proper XHTML headers...
+Header( 'Content-Type: text/html;charset=utf-8' );     
 Header( 'Expires: Tue, 23 Jun 2009 12:00:00 GMT' );     // Date in the past
 
 // Anti-CSRF

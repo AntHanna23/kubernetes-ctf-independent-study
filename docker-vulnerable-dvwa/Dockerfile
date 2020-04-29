@@ -22,6 +22,7 @@ RUN apt-get update && \
 
 COPY php.ini /etc/php5/apache2/php.ini
 COPY dvwa /var/www/html
+COPY flag.txt /
 
 COPY config.inc.php /var/www/html/config/
 

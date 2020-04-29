@@ -10,8 +10,9 @@ RUN useradd -G sudo,root -ms /bin/bash admin \
 #     && echo "admin ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/admin && \
 #     chmod 0440 /etc/sudoers.d/admin
 
-ENTRYPOINT service ssh start && bash
+ENTRYPOINT service ssh start && tail -f /dev/null
 
 COPY flag.txt /home/admin/flag.txt
 
 
+EXPOSE 22

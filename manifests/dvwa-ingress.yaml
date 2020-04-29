@@ -1,0 +1,108 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dvwa
+  labels:
+    app: dvwa
+spec:
+  replicas: 40
+  selector:
+    matchLabels:
+      app: dvwa
+  template:
+    metadata:
+      labels:
+        app: dvwa
+    spec:
+      containers:
+      - name: dvwa
+        image: ajhanna/dvwa
+        ports:
+        - containerPort: 80
+        resources: 
+          limits:
+            cpu: "1000m"
+            memory: "600Mi" 
+          requests:  
+            cpu: "200m"
+            memory: "200Mi"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dvwa-service
+  labels:
+    app: dvwa
+  annotations:
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    app: dvwa
+  sessionAffinityConfig:
+   clientIP:
+      timeoutSeconds: 1000000
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dvwa-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+  labels:
+    app: dvwa
+spec:
+  rules:
+  - host:  worker1.kube
+    http:
+      paths:
+      - path: /
+        backend: 
+          serviceName: dvwa-service
+          servicePort: 80
+  - host:  worker2.kube
+    http:
+      paths:
+      - path: /
+        backend: 
+          serviceName: dvwa-service
+          servicePort: 80
+  - host:  worker3.kube
+    http:
+      paths:
+      - path: /
+        backend: 
+          serviceName: dvwa-service
+          servicePort: 80
+
+---
+apiVersion:  autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata: 
+  name: dvwa-autoscaler
+  namespace: ctf
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: dvwa
+  maxReplicas: 30
+  minReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 40
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageValue: "300Mi"

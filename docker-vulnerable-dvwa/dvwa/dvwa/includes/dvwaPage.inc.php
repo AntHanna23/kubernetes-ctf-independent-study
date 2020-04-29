@@ -171,7 +171,7 @@ function dvwaMessagePop() {
 
 function messagesPopAllToHtml() {
 	$messagesHtml = '';
-	while( $message = dvwaMessagePop() ) {   // TODO- sharpen!
+	while( $message = dvwaMessagePop() ) {   
 		$messagesHtml .= "<div class=\"message\">{$message}</div>";
 	}
 
@@ -274,7 +274,7 @@ function dvwaHtmlEcho( $pPage ) {
 
 	// Send Headers + main HTML code
 	Header( 'Cache-Control: no-cache, must-revalidate');   // HTTP/1.1
-	Header( 'Content-Type: text/html;charset=utf-8' );     // TODO- proper XHTML headers...
+	Header( 'Content-Type: text/html;charset=utf-8' );    
 	Header( 'Expires: Tue, 23 Jun 2009 12:00:00 GMT' );    // Date in the past
 
 	echo "
@@ -345,7 +345,7 @@ function dvwaHtmlEcho( $pPage ) {
 function dvwaHelpHtmlEcho( $pPage ) {
 	// Send Headers
 	Header( 'Cache-Control: no-cache, must-revalidate');   // HTTP/1.1
-	Header( 'Content-Type: text/html;charset=utf-8' );     // TODO- proper XHTML headers...
+	Header( 'Content-Type: text/html;charset=utf-8' );     
 	Header( 'Expires: Tue, 23 Jun 2009 12:00:00 GMT' );    // Date in the past
 
 	echo "
@@ -382,7 +382,7 @@ function dvwaHelpHtmlEcho( $pPage ) {
 function dvwaSourceHtmlEcho( $pPage ) {
 	// Send Headers
 	Header( 'Cache-Control: no-cache, must-revalidate');   // HTTP/1.1
-	Header( 'Content-Type: text/html;charset=utf-8' );     // TODO- proper XHTML headers...
+	Header( 'Content-Type: text/html;charset=utf-8' );     .
 	Header( 'Expires: Tue, 23 Jun 2009 12:00:00 GMT' );    // Date in the past
 
 	echo "
