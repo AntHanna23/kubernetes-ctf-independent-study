@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,7 +6,7 @@ metadata:
   labels:
     app: vuln-ssh
 spec:
-  replicas: 3
+  replicas: 40
   selector:
     matchLabels:
       app: vuln-ssh
@@ -21,11 +22,11 @@ spec:
         - containerPort: 22
         resources:
           limits:
-            cpu: "600m"
-            memory: "256Mi"
+            cpu: "1000m"
+            memory: "600Mi"
           requests:
-            cpu: 200m
-            memory: "64Mi"
+            cpu: "200m"
+            memory: "200Mi"
 
 ---
 
@@ -37,23 +38,46 @@ metadata:
     app: vuln-ssh
 spec:
   ports:
-  - name: vuln-ssh
+  - name: http
     port: 22
-    protocol: TCP
     targetPort: 22
   selector:
     app: vuln-ssh
-
+  sessionAffinityConfig:
+   clientIP:
+      timeoutSeconds: 1000000
 ---
 
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: vuln-ssh-ingress
-  annotations:
-    kubenetes.io/ingress.class: "traefick"
+  labels:
+    app: vuln-ssh
 spec:
   backend:
-    serviceName: vuln-ssh
+    serviceName: vuln-ssh-service
     servicePort: 22
 
+---
+apiVersion:  autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: vuln-ssh-autoscaler
+  namespace: ctf
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: vuln-ssh
+  maxReplicas: 30
+  minReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 40
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageValue: "300Mi"
