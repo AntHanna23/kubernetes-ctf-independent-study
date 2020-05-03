@@ -1,12 +1,9 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vuln-ssh
-  labels:
-    app: vuln-ssh
+  name: vuln-ssh-lb
+  namespace: ctf
 spec:
-  replicas: 40
   selector:
     matchLabels:
       app: vuln-ssh
@@ -19,14 +16,8 @@ spec:
       - name: vuln-ssh
         image: ajhanna/vuln-ssh
         ports:
-        - containerPort: 22
-        resources:
-          limits:
-            cpu: "1000m"
-            memory: "600Mi"
-          requests:
-            cpu: "200m"
-            memory: "200Mi"
+        - name: ssh
+          containerPort: 22
 
 ---
 
@@ -34,44 +25,31 @@ apiVersion: v1
 kind: Service
 metadata:
   name: vuln-ssh-service
-  labels:
-    app: vuln-ssh
+  namespace: ctf
 spec:
   ports:
-  - name: http
+  - name: ssh
     port: 22
+    protocol: TCP
     targetPort: 22
   selector:
     app: vuln-ssh
-  sessionAffinityConfig:
-   clientIP:
-      timeoutSeconds: 1000000
----
-
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: vuln-ssh-ingress
-  labels:
-    app: vuln-ssh
-spec:
-  backend:
-    serviceName: vuln-ssh-service
-    servicePort: 22
+  type: LoadBalancer
 
 ---
+
 apiVersion:  autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: vuln-ssh-autoscaler
+  name: vuln-sshlb-autoscaler
   namespace: ctf
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: vuln-ssh
-  maxReplicas: 30
-  minReplicas: 3
+    name: vuln-ssh-lb
+  maxReplicas: 3
+  minReplicas: 1
   metrics:
   - type: Resource
     resource:
@@ -80,4 +58,5 @@ spec:
   - type: Resource
     resource:
       name: memory
-      targetAverageValue: "300Mi"
+      targetAverageValue: "400Mi"
+
