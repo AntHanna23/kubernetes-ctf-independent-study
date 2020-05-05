@@ -18,15 +18,15 @@ Now you need a ConfigMap for MetalLb. ConfigMaps allow you to decouple configura
     apiVersion: v1
     kind: ConfigMap
     metadata:
-    namespace: metallb-system
-    name: config
+      namespace: metallb-system
+      name: config
     data:
-    config: |
+     config: |
         address-pools:
         - name: my-ip-space
-        protocol: layer2
-        addresses:
-        - 192.168.1.240/2(add your network addressing scheme)
+          protocol: layer2
+          addresses:
+          - 192.168.1.240/2(add your network addressing scheme)
     EOF
     
 
