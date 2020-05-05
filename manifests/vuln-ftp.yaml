@@ -38,25 +38,22 @@ metadata:
     app: vuln-ftp
 spec:
   ports:
-  - name: ftp
-    port: 2121
+  - name: ftps
+    port: 27
     protocol: TCP
-    targetPort: 21
+    targetPort: 27
+  - name: ftp
+    port: 20
+    protocol: TCP
+    targetPort: 20
+  - name: highport1
+    port: 13450
+    protocol: TCP
+    targetPort: 13450
   selector:
     app: vuln-ftp
+  type: LoadBalancer
 
 ---
 
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: vuln-ftp-ingress
-  annotations:
-    kubenetes.io/ingress.class: "traefick"
-spec:
-  entryPoints:
-  routes:
-    services:
-    - name: vuln-ftp
-      port: 2121
 

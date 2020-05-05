@@ -6,7 +6,6 @@ metadata:
   labels:
     app: dvwa
 spec:
-  replicas: 40
   selector:
     matchLabels:
       app: dvwa
@@ -94,7 +93,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: dvwa
-  maxReplicas: 30
+  maxReplicas: 50
   minReplicas: 3
   metrics:
   - type: Resource
