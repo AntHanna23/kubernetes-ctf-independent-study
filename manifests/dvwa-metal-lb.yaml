@@ -57,7 +57,7 @@ spec:
     kind: Deployment
     name: dvwa-lb
   maxReplicas: 30
-  minReplicas: 10
+  minReplicas: 3
   metrics:
   - type: Resource
     resource:
