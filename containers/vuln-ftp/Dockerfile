@@ -29,3 +29,6 @@ ENTRYPOINT ./start.sh
 
 # Expose these ports when running docker containers 
 EXPOSE 27 20 13450-13500
+
+
+# TODO Make a start up stript that changes the IP in the vsftpd.conf

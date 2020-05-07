@@ -19,7 +19,7 @@ spec:
         image: ajhanna/vuln-ftp:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 27
+        - containerPort: 21
         - containerPort: 20
         - containerPort: 13450
         - containerPort: 13451
@@ -51,9 +51,9 @@ metadata:
 spec:
   ports:
   - name: ftps
-    port: 27
+    port: 21
     protocol: TCP
-    targetPort: 27
+    targetPort: 21
   - name: ftp
     port: 20
     protocol: TCP
