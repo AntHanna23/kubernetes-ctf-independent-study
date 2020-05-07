@@ -2,9 +2,9 @@
 
 Kubernetes Manifests are a collection of yaml configs in a single file that allows a user to build a desired application by applying the yaml file. This includes deployments, ingress, services, and anything else that would be packaged to build the application in Kubernetes. You can find the the manifests for the Capture the Flag in the repo. 
 
-# DVWA Manifest
+# DVWA Manifest /w MetalLb
 
-This web application deployment consist of the deployment of the pods, a services to allow the cluster to talk to the containers, and finally an auto scaling function. It uses a load balancer called [Metallb](https://metallb.universe.tf/installation/). Once you have a cluster installed with Rancher, you are ready to download MetalLb. 
+This web application deployment consist of the deployment of the pods, a services to allows the cluster to talk to the containers, and finally an auto scaling function. It uses a load balancer called [Metallb](https://metallb.universe.tf/installation/). Once you have a cluster installed with Rancher, you are ready to download MetalLb. 
 
     kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
     kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
@@ -18,6 +18,17 @@ Now you need a ConfigMap for MetalLb. ConfigMaps allow you to decouple configura
     apiVersion: v1
     kind: ConfigMap
     metadata:
+<<<<<<< HEAD
+        namespace: metallb-system
+        name: config
+    data:
+        config: |
+          address-pools:
+            - name: my-ip-space
+              protocol: layer2
+              addresses:
+              - 192.168.1.240/2(add your network addressing scheme)
+=======
       namespace: metallb-system
       name: config
     data:
@@ -27,6 +38,7 @@ Now you need a ConfigMap for MetalLb. ConfigMaps allow you to decouple configura
           protocol: layer2
           addresses:
           - 192.168.1.240/2(add your network addressing scheme)
+>>>>>>> master
     EOF
     
 
@@ -38,10 +50,37 @@ Now go to the manifests folder and run:
 
     kubectl apply -f dvwa-metal-lb.yaml -n ctf
 
-The pods will start running and you will be able to connect via the LoadBalancer port over port 8080. Find the LoadBalancer IP with 
+The pods will start running and you will be able to connect via the LoadBalancer port over port 8080. Find the LoadBalancer IP with the following command and look under the external IP for the IP address to connect to.
 
-    kubectl get svc -n metallb-system
+    kubectl get svc -n ctf
 
-**Warning** : Make sure ad blocker is off. Add blocker can block the CSRF tokens handed by the site. If you have a problem with CSRF open up a private browser and try a few times before asking for assistance.
+# Vuln-SSH
 
-# Vuln-Ssh
+The vulnerable SSH container is simple and does not require configurations to be passed into the container like metalLB. Simply Navigate to the manifest file and run the following command.
+
+kubectl apply -f vuln-ssh.yaml -n ctf
+
+This will create the deployment and attach it to metalLB. Look at the services in the ctf name space to find the external IP.
+
+# Vuln-FTP
+
+The container has so very specific parameter that need to be set for it to work. Within the vuln-ftp docker file there is a document called vsftpd.conf. Because of the way Kubernetes does its networking, you must specify the ip it returns to. Making it return to the metalLB service IP works for me.
+
+    vsftpd.conf
+
+    listen=YES
+    listen_port=21
+    anonymous_enable=YES
+    local_enable=NO
+    write_enable=NO
+    pasv_enable=YES
+    pasv_promiscuous=YES
+    port_promiscuous=YES
+    pasv_min_port=13450
+    pasv_max_port=13460
+    file_open_mode=0755
+    anon_root=/var/ftp/
+    no_anon_password=YES
+    pasv_address= <LoadBalancer external IP>
+
+I will attempt to automate this with the Docker start up file, but you can also change this by replacing the IP above with the load balancer external IP.

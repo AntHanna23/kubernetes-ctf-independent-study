@@ -5,7 +5,7 @@ metadata:
   labels:
     app: vuln-ftp
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: vuln-ftp
@@ -16,10 +16,22 @@ spec:
     spec:
       containers:
       - name: vuln-ftp
-        image: ajhanna/vuln-ftp
+        image: ajhanna/vuln-ftp:latest
+        imagePullPolicy: Always
         ports:
-        - containerPort: 27
         - containerPort: 21
+        - containerPort: 20
+        - containerPort: 13450
+        - containerPort: 13451
+        - containerPort: 13452
+        - containerPort: 13453
+        - containerPort: 13454
+        - containerPort: 13455
+        - containerPort: 13456
+        - containerPort: 13457
+        - containerPort: 13458
+        - containerPort: 13459
+        - containerPort: 13460
         resources:
           limits:
             cpu: "600m"
@@ -38,25 +50,62 @@ metadata:
     app: vuln-ftp
 spec:
   ports:
-  - name: ftp
-    port: 2121
+  - name: ftps
+    port: 21
     protocol: TCP
     targetPort: 21
+  - name: ftp
+    port: 20
+    protocol: TCP
+    targetPort: 20
+  - name: passiveport1
+    port: 13450
+    protocol: TCP
+    targetPort: 13450
+  - name: passiveport2
+    port: 13451
+    protocol: TCP
+    targetPort: 13451
+  - name: passiveport3
+    port: 13452
+    protocol: TCP
+    targetPort: 13452
+  - name: passiveport4
+    port: 13453
+    protocol: TCP
+    targetPort: 13453
+  - name: passiveport5
+    port: 13454
+    protocol: TCP
+    targetPort: 13454
+  - name: passiveport6
+    port: 13455
+    protocol: TCP
+    targetPort: 13455
+  - name: passiveport7
+    port: 13456
+    protocol: TCP
+    targetPort: 13456
+  - name: passiveport8
+    port: 13457
+    protocol: TCP
+    targetPort: 13457
+  - name: passiveport9
+    port: 13458
+    protocol: TCP
+    targetPort: 13458
+  - name: passiveport10
+    port: 13459
+    protocol: TCP
+    targetPort: 13459
+  - name: passiveport11
+    port: 13460
+    protocol: TCP
+    targetPort: 13460
   selector:
     app: vuln-ftp
+  type: LoadBalancer
 
 ---
 
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: vuln-ftp-ingress
-  annotations:
-    kubenetes.io/ingress.class: "traefick"
-spec:
-  entryPoints:
-  routes:
-    services:
-    - name: vuln-ftp
-      port: 2121
 
