@@ -18,6 +18,13 @@ spec:
         ports:
         - name: ssh
           containerPort: 22
+        resources: 
+          limits:
+            cpu: "1000m"
+            memory: "600Mi" 
+          requests:  
+            cpu: "200m"
+            memory: "200Mi"
 
 ---
 

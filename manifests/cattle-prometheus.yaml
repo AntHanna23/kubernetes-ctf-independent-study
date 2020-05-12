@@ -1,0 +1,250 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: grafana
+      chart: grafana-0.0.1
+      heritage: Tiller
+      io.cattle.field/appId: cluster-monitoring
+      kubernetes.io/cluster-service: "true"
+      release: cluster-monitoring
+    name: access-grafana
+    namespace: cattle-prometheus
+  spec:
+    clusterIP: 10.43.74.44
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+    selector:
+      app: grafana
+      chart: grafana-0.0.1
+      release: cluster-monitoring
+    sessionAffinity: ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 10800
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: prometheus
+      chart: prometheus-0.0.1
+      heritage: Tiller
+      io.cattle.field/appId: cluster-monitoring
+      kubernetes.io/cluster-service: "true"
+      release: cluster-monitoring
+    name: access-prometheus
+    namespace: cattle-prometheus
+  spec:
+    clusterIP: 10.43.175.220
+    ports:
+    - name: nginx-http
+      port: 80
+      protocol: TCP
+      targetPort: nginx-http
+    selector:
+      app: prometheus
+      chart: prometheus-0.0.1
+      release: cluster-monitoring
+    sessionAffinity: ClientIP
+    sessionAffinityConfig:
+      clientIP:
+        timeoutSeconds: 10800
+    type: LoadBalancer
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: grafana
+      chart: grafana-0.0.1
+      heritage: Tiller
+      io.cattle.field/appId: cluster-monitoring
+      monitoring.coreos.com: "true"
+      release: cluster-monitoring
+    name: expose-grafana-metrics
+    namespace: cattle-prometheus
+  spec:
+    clusterIP: None
+    ports:
+    - name: metrics
+      port: 3000
+      protocol: TCP
+      targetPort: web
+    selector:
+      app: grafana
+      chart: grafana-0.0.1
+      release: cluster-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      k8s-app: kubelet
+      monitoring.coreos.com: "true"
+    name: expose-kubelets-metrics
+    namespace: cattle-prometheus
+  spec:
+    clusterIP: None
+    ports:
+    - name: https-metrics
+      port: 10250
+      protocol: TCP
+      targetPort: 10250
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: exporter-kube-state
+      chart: exporter-kube-state-0.0.1
+      heritage: Tiller
+      io.cattle.field/appId: cluster-monitoring
+      k8s-app: kube-state
+      monitoring.coreos.com: "true"
+      release: cluster-monitoring
+    name: expose-kubernetes-metrics
+    namespace: cattle-prometheus
+  spec:
+    clusterIP: None
+    ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: http
+    - name: http-metrics
+      port: 8081
+      protocol: TCP
+      targetPort: http-metrics
+    selector:
+      app: exporter-kube-state
+      chart: exporter-kube-state-0.0.1
+      release: cluster-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: exporter-node
+      chart: exporter-node-0.0.1
+      heritage: Tiller
+      io.cattle.field/appId: cluster-monitoring
+      k8s-app: node
+      monitoring.coreos.com: "true"
+      release: cluster-monitoring
+    name: expose-node-metrics
+    namespace: cattle-prometheus
+  spec:
+    clusterIP: None
+    ports:
+    - name: metrics
+      port: 9796
+      protocol: TCP
+      targetPort: 9796
+    selector:
+      app: exporter-node
+      chart: exporter-node-0.0.1
+      release: cluster-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: prometheus-operator
+      chart: prometheus-operator-0.0.2
+      heritage: Tiller
+      io.cattle.field/appId: monitoring-operator
+      monitoring.coreos.com: "true"
+      release: monitoring-operator
+    name: expose-operator-metrics
+    namespace: cattle-prometheus
+  spec:
+    clusterIP: None
+    ports:
+    - name: metrics
+      port: 47323
+      protocol: TCP
+      targetPort: http
+    selector:
+      app: prometheus-operator
+      chart: prometheus-operator-0.0.2
+      release: monitoring-operator
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: prometheus
+      chart: prometheus-0.0.1
+      heritage: Tiller
+      io.cattle.field/appId: cluster-monitoring
+      monitoring.coreos.com: "true"
+      release: cluster-monitoring
+    name: expose-prometheus-metrics
+    namespace: cattle-prometheus
+  spec:
+    clusterIP: None
+    ports:
+    - name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: web
+    selector:
+      app: prometheus
+      chart: prometheus-0.0.1
+      release: cluster-monitoring
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      monitoring.coreos.com: "true"
+      operated-prometheus: "true"
+    name: prometheus-operated
+    namespace: cattle-prometheus
+    ownerReferences:
+    - apiVersion: monitoring.coreos.com/v1
+      kind: Prometheus
+      name: cluster-monitoring
+      uid: 1ccf00dd-b762-4494-921c-5557b599d9d7
+  spec:
+    clusterIP: None
+    ports:
+    - name: web
+      port: 9090
+      protocol: TCP
+      targetPort: web
+    selector:
+      app: prometheus
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+

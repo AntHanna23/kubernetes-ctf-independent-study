@@ -22,13 +22,13 @@ Download Docker to any machines that will be used within the cluster. Install Ku
 
 Kubectl allows you to run commands against Kubernetes clusters. You can use kubectl to deploy applications, inspect and manage cluster resources, and view logs. This will go on your local machine to control the cluster. Kubectl is only needed on you local machine and on a master node
 
-    curl -LO https://storage.googleapis.com/kubernetes-release/release/\`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt\`/bin/linux/amd64/kubectl
-
-    curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
   
     chmod +x ./kubectl 
 
     sudo mv ./kubectl /usr/local/bin/kubectl
 
+
+# TODO add how to put in kubernetes auto complete
 
 
