@@ -59,6 +59,11 @@ metadata:
   name: dvwalb-autoscaler
   namespace: ctf
 spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: dvwa-lb
+  minReplicas: 3
   maxReplicas: 30
   metrics:
   - type: Resource
@@ -69,10 +74,7 @@ spec:
     resource:
       name: memory
       targetAverageValue: "400Mi"
-  minReplicas: 3
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: dvwa-lb
+  
+  
   
   
