@@ -28,8 +28,6 @@ items:
       clientIP:
         timeoutSeconds: 10800
     type: LoadBalancer
-  status:
-    loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
@@ -58,8 +56,6 @@ items:
       clientIP:
         timeoutSeconds: 10800
     type: LoadBalancer
-  status:
-    loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
@@ -85,8 +81,6 @@ items:
       release: cluster-monitoring
     sessionAffinity: None
     type: ClusterIP
-  status:
-    loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
@@ -104,8 +98,6 @@ items:
       targetPort: 10250
     sessionAffinity: None
     type: ClusterIP
-  status:
-    loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
@@ -136,8 +128,6 @@ items:
       release: cluster-monitoring
     sessionAffinity: None
     type: ClusterIP
-  status:
-    loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
@@ -164,8 +154,6 @@ items:
       release: cluster-monitoring
     sessionAffinity: None
     type: ClusterIP
-  status:
-    loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
@@ -191,8 +179,6 @@ items:
       release: monitoring-operator
     sessionAffinity: None
     type: ClusterIP
-  status:
-    loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
@@ -218,8 +204,6 @@ items:
       release: cluster-monitoring
     sessionAffinity: None
     type: ClusterIP
-  status:
-    loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
@@ -232,7 +216,6 @@ items:
     - apiVersion: monitoring.coreos.com/v1
       kind: Prometheus
       name: cluster-monitoring
-      uid: 1ccf00dd-b762-4494-921c-5557b599d9d7
   spec:
     clusterIP: None
     ports:
@@ -244,7 +227,5 @@ items:
       app: prometheus
     sessionAffinity: None
     type: ClusterIP
-  status:
-    loadBalancer: {}
 kind: List
 
