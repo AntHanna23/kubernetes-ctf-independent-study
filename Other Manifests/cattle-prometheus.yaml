@@ -216,7 +216,7 @@ items:
     - apiVersion: monitoring.coreos.com/v1
       kind: Prometheus
       name: cluster-monitoring
-       uid: 1ccf00dd-b762-4494-921c-5557b599d9d7
+       #uid: 1ccf00dd-b762-4494-921c-5557b599d9d7
   spec:
     clusterIP: None
     ports:
