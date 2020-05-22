@@ -29,6 +29,6 @@ Kubectl allows you to run commands against Kubernetes clusters. You can use kube
     sudo mv ./kubectl /usr/local/bin/kubectl
 
 
-# TODO add how to put in kubernetes auto complete
+Enabling Kubernetes autocomplete can be very helpful while managing the cluster. Look [here](https://kubernetes.io/docs/tasks/tools/install-kubectl/) to see how to enable auto complete along with documentation to supplement these instructions.
 
 

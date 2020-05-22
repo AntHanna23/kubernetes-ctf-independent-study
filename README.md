@@ -13,3 +13,5 @@ This will be a description and documentation on all the parts make the cluster w
 *  [Docker-Containers](/docs/docker-container.md)
 *  [Rancher-Setup](/docs/rancher-setup.md)
 *  [Kubernetes Manifests](/docs/kubernetes-manifests.md)
+*  [Monitoring the Cluster](/docs/monitoring.md)
+*  [ArgoCD and Declarative GitOps](/docs/argocd.md)

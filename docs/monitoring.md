@@ -14,10 +14,14 @@ Prometheus and Gafana will show real time events that are happening with the Kub
 
 Check the service in the cattle-prometheus namespace and visit the respective IP to see Grafana and Prometheus with full node exporter dashboard. 
 
+![](pics/grafana.png)
+
 When the container dies teh data will also be deleted. This is only for monitoring the cluster in real time  and persistant logging will be gathered in fluentd and forwarded to ELK stack. 
 
+
+
 # ELK Stack
-ElK Stack has to be ran on a seperate server to ensure that the logs are to ensuere persistance and safe storage of the server. Create a server and download Docker. Copy the ELK directory in the containers folder to the new machine. 
+ElK Stack has to be ran on a seperate server to ensure that the logs are to ensure persistance and safe storage of the server. Create a server and download Docker. Copy the ELK directory in the containers folder to the new machine. 
 
 On the new machine:
 
@@ -31,7 +35,7 @@ This will create the conatiner and the volumes that will be used to store and pr
 
 Go to the logging tab within the ctf namespace and select logging. Choose elasticsearch and input the correct ip.
 
-TODO add pictures
 
+Visit the IP of elasticsearch on port 5601 and see the Kibana dahsboard with logs being forwarded
 
-
+![](pics/elk.png)
