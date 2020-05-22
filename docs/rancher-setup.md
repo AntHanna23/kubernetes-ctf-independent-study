@@ -8,11 +8,11 @@ If you are configuring the cluster for the run:
 
     rke config --name <cluster-name>.yml // I used Calico for networking but others will work
 
-This will take you though creation of thr cluster. A file will be created and then run:
+This will take you though creation of the cluster. A file will be created and then run:
 
     rke up
 
-Move the generated configuration file to you kube config to allow kubectl access to the cluster.
+Move the generated configuration file to your kube config to allow kubeCtl access to the cluster.
 
     mkdir $HOME/.kube
     mv kube_config_cluster.yml $HOME/.kube/config
@@ -20,7 +20,7 @@ Move the generated configuration file to you kube config to allow kubectl access
 
 # RKE Server
 
-RKE server is a convenient way of viewing and managing a cluster thru a GUI. Kubernetes is a very complicated framework and the GUI view of it gives a nice visual and some easy management options. Create a server that can connect to the cluster. Then update and install docker. 
+RKE server is a convenient way of viewing and managing a cluster through a GUI. Kubernetes is a very complicated framework and the GUI view of it gives a nice visual and some easy management options. Create a server that can connect to the cluster. Then update and install docker. 
 
 ### Debian/Ubuntu
     sudo apt update && sudo apt upgrade -y
@@ -34,7 +34,7 @@ Now we have to start the container and make it persist through reboots and stops
 
     sudo docker container run -d --restart=unless-stopped  -p 443:443 rancher/rancher
 
-Visit the host on port 443 and the Rancher Gui should prompt you to make a user and log in
+Visit the host on port 443 and the Rancher GUI should prompt you to make a username and password. 
 
 
 

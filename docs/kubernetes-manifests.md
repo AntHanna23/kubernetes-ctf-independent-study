@@ -11,7 +11,7 @@ This web application deployment consist of the deployment of the pods, a service
     # On first install only
     kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
-Now you need a ConfigMap for MetalLb. ConfigMaps allow you to decouple configuration artifacts from image content to keep containerized applications portable. This page provides a series of usage examples demonstrating how to create ConfigMaps and configure Pods using data stored in ConfigMaps. In layman's terms, it can be used for values (configurations, secrets, etc.) to be passed to containers. Because containers die and comeback all the time, it can be helpful to pass configs from a consistent source. Create the ConfigMap by make a yaml file. 
+Now you need a ConfigMap for MetalLb. ConfigMaps allow you to decouple configuration artifacts from image content to keep containerized applications portable. This page provides a series of usage examples demonstrating how to create ConfigMaps and configure Pods using data stored in ConfigMaps. In layman's terms, it can be used for values (configurations, secrets, etc.) to be passed to containers. Because containers die and comeback all the time, it can be helpful to pass configs from a consistent source. Create the ConfigMap by making a yaml file. 
 
 
     $ cat <<EOF | kubectl create -f -
@@ -44,7 +44,7 @@ The pods will start running and you will be able to connect via the LoadBalancer
 
 # Vuln-SSH
 
-The vulnerable SSH container is simple and does not require configurations to be passed into the container like metalLB. Simply Navigate to the manifest file and run the following command.
+The vulnerable SSH container is simple and does not require configurations to be passed into the container like metalLB. Simply navigate to the manifest file and run the following command:
 
 kubectl apply -f vuln-ssh.yaml -n ctf
 
@@ -52,7 +52,9 @@ This will create the deployment and attach it to metalLB. Look at the services i
 
 # Vuln-FTP
 
-The container has so very specific parameter that need to be set for it to work. Within the vuln-ftp docker file there is a document called vsftpd.conf. Because of the way Kubernetes does its networking, you must specify the ip it returns to. Making it return to the metalLB service IP works for me.
+The container has some very specific parameters that need to be set for it to work. Within the vuln-ftp docker file there is a document called vsftpd.conf. Because of the way Kubernetes does its networking, you must specify the IP it returns to. 
+
+*Hint: Making it return to the metalLB service IP works for me.*
 
     vsftpd.conf
 
