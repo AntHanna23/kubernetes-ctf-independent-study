@@ -15,6 +15,7 @@ spec:
       containers:
       - name: vuln-ssh
         image: ajhanna/vuln-ssh
+        imagePullPolicy: Always
         ports:
         - name: ssh
           containerPort: 22
