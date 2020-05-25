@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: dvwa
-        image: raesene/bwapp
+        image: ajhanna/dvwa
         imagePullPolicy: Always
         ports:
         - name: http
@@ -24,7 +24,7 @@ spec:
             cpu: "1000m"
             memory: "600Mi" 
           requests:  
-            cpu: "200m"
+            cpu: "400m"
             memory: "200Mi"
 
 ---
@@ -50,8 +50,8 @@ spec:
   type: LoadBalancer
   sessionAffinity: ClientIP
   sessionAffinityConfig:
-    clientIP:
-     timeoutSeconds: 10000
+    clientIP: 
+      timeoutSeconds: 10000
 ---
 
 apiVersion:  autoscaling/v1
