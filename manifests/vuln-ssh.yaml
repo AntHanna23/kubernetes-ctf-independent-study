@@ -46,24 +46,38 @@ spec:
 
 ---
 
-apiVersion:  autoscaling/v2beta1
+# apiVersion:  autoscaling/v2beta1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: vuln-sshlb-autoscaler
+#   namespace: ctf
+# spec:
+#   maxReplicas: 30
+#   metrics:
+#   - type: Resource
+#     resource:
+#       name: cpu
+#       targetAverageUtilization: 40
+#   - type: Resource
+#     resource:
+#       name: memory
+#       targetAverageValue: "400Mi"
+#   minReplicas: 3
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: vuln-sshlb
+
+apiVersion:  autoscaling/v1
 kind: HorizontalPodAutoscaler
-metadata:
+metadata: 
   name: vuln-sshlb-autoscaler
   namespace: ctf
 spec:
-  maxReplicas: 30
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 40
-  - type: Resource
-    resource:
-      name: memory
-      targetAverageValue: "400Mi"
-  minReplicas: 3
+  minReplicas: 1
+  maxReplicas: 5
   scaleTargetRef:
-    apiVersion: apps/v1
+    apiVersion: argoproj.io/v1alpha1
     kind: Deployment
     name: vuln-sshlb
+  targetCPUUtilizationPercentage: 60
