@@ -51,10 +51,10 @@ spec:
   sessionAffinity: ClientIP
   sessionAffinityConfig:
     clientIP:
-      timeoutSeconds: 10000
+     timeoutSeconds: 10000
 ---
 
-apiVersion:  autoscaling/v2beta1
+apiVersion:  autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata: 
   name: dvwalb-autoscaler
@@ -63,18 +63,19 @@ spec:
   minReplicas: 3
   maxReplicas: 30
   scaleTargetRef:
-    apiVersion: apps/v1
+    apiVersion: argoproj.io/v1alpha1
     kind: Deployment
     name: dvwa-lb
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 70
-  - type: Resource
-    resource:
-      name: memory
-      targetAverageValue: 70
+  targetCPUUtilizationPercentage: 60
+  # metrics:
+  # - type: Resource
+  #   resource:
+  #     name: cpu
+  #     targetAverageUtilization: 70
+  # - type: Resource
+  #   resource:
+  #     name: memory
+  #     targetAverageValue: "400Mi"
   
   
   
