@@ -63,7 +63,7 @@ spec:
   minReplicas: 3
   maxReplicas: 30
   scaleTargetRef:
-    apiVersion: argoproj.io/v1alpha1
+    apiVersion: apps/v1
     kind: Deployment
     name: dvwa-lb
   targetCPUUtilizationPercentage: 60
