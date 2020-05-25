@@ -77,7 +77,7 @@ spec:
   minReplicas: 1
   maxReplicas: 5
   scaleTargetRef:
-    apiVersion: argoproj.io/v1alpha1
+    apiVersion: apps/v1
     kind: Deployment
     name: vuln-sshlb
   targetCPUUtilizationPercentage: 60
