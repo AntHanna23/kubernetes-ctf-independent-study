@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: dvwa
-        image: raesene/bwapp
+        image: ajhanna/dvwa
         imagePullPolicy: Always
         ports:
         - name: http
@@ -66,7 +66,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: dvwa-lb
-  targetCPUUtilizationPercentage: 60
+  targetCPUUtilizationPercentage: 30
   # metrics:
   # - type: Resource
   #   resource:
