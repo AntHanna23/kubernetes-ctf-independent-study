@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: dvwa
-        image: ajhanna/dvwa
+        image: raesene/bwapp
         imagePullPolicy: Always
         ports:
         - name: http
